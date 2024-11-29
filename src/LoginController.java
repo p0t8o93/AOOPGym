@@ -63,7 +63,7 @@ public class LoginController {
      
      // Login Authentication
      public boolean LoginAuthentication(String username, String password) {
-	  String sql = "SELECT * FROM Users WHERE BINARY username = ? AND password = ?";
+	  String sql = "SELECT * FROM Users WHERE BINARY username = ? AND password = ? AND Status = 'Enabled'";
 
 	  try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 	       PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -89,25 +89,6 @@ public class LoginController {
      public static int generateID(){
 	  Random rand = new Random();
 	  return 100000 + rand.nextInt(900000);
-     }
-     
-     public static void addAdmin(String username, String password){
-	  String userID = String.valueOf(generateID());
-	  String sql = "INSERT INTO users (userID, type, username, password) VALUES (? ,'administrator' , ?, ?)";
-
-	  try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-	       PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
-	      // Set the parameters for the prepared statement
-	      preparedStatement.setString(1, userID);
-	      preparedStatement.setString(2, username);
-	      preparedStatement.setString(3, password);
-	      
-	      
-
-	  } catch (Exception e) {
-	      e.printStackTrace(); // Handle exceptions appropriately in production code
-	  }
      }
      
      public static void addFacilityOthers(String type, String name){
