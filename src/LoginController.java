@@ -4,53 +4,66 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Random;
 import java.awt.event.*; // Importing AWT event classes
+import java.awt.*; 
+import javax.swing.*;
 
 
-public class Controller {
+public class LoginController {
      private static final String DB_URL = "jdbc:mysql://localhost:3306/database";
      private static final String DB_USER = "root";
      private static final String DB_PASSWORD = "root";
      
      private User user;
      private Login login;
-     private UserForm userform
+     private Register register;
+     
+     private CardLayout cardLayout;
+     private JPanel mainPanel;
+     private JFrame frame;
      
      // Constructor
-     public Controller(Login login, UserForm userform){
-	  this.user = user;
+     public LoginController(Login login, Register register, JPanel mainPanel, JFrame frame){
+	  
 	  this.login = login;
-	  this.userform = userform;
+	  this.register = register;
+	  
+	  this.mainPanel = mainPanel;
+	  this.cardLayout = (CardLayout) mainPanel.getLayout();
+	  this.frame = frame;
 	  
 	  // Section for Login View functionality
-	  Login.getLoginBtn().addActionListener(new LoginBtnListener());
-	  
-	  // Userform view functionality
-	  userform.getSubmitBtn().addActionListener(new SubmitBtnListener());
+	  this.login.getLoginBtn().addActionListener(new LoginBtnListener());
+	  this.login.getRegisterBtn().addActionListener(new RegisterBtnListener());
 	  
      }
      
      // Login.java Login Button functionality
      class LoginBtnListener implements ActionListener{
 	  public void actionPerformed(ActionEvent e) {
-	       String username = Login.getUsername();
-	       String password = Login.getPassword();
+	       String username = login.getUsername();
+	       String password = login.getPassword();
 	       if (LoginAuthentication(username, password)){
-		    System.out.println("Successfully logged in as " + username);
+		    if (isAdmin(username, password)){
+			 frame.setSize(800, 600);
+			 cardLayout.show(mainPanel, "AdminPortal");
+		    }
 	       } else {
 		    System.out.println("Error");
 	       }
 	  }
      }
      
-     class SubmitBtnListener implements ActionListener{
-	  public void actionPerformed(ActionEvent e){
-	       
-	  }
-     }
+     class RegisterBtnListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            // Switch to the registration panel
+            cardLayout.show(mainPanel, "Register");
+            frame.setSize(500, 550);
+        }
+    }
      
      // Login Authentication
-     public static boolean LoginAuthentication(String username, String password) {
-	  String sql = "SELECT * FROM users WHERE BINARY username = ? AND password = ?";
+     public boolean LoginAuthentication(String username, String password) {
+	  String sql = "SELECT * FROM Users WHERE BINARY username = ? AND password = ?";
 
 	  try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 	       PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -73,30 +86,9 @@ public class Controller {
 	  }
      }
      
-     // userID Generator
      public static int generateID(){
 	  Random rand = new Random();
 	  return 100000 + rand.nextInt(900000);
-     }
-     
-     // Registering
-     public static void registerUser(String username, String password){
-	  String userID = String.valueOf(generateID());
-	  String sql = "INSERT INTO users (userID, type, username, password) VALUES (? ,'user' , ?, ?)";
-
-	  try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-	       PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
-	      // Set the parameters for the prepared statement
-	      preparedStatement.setString(1, userID);
-	      preparedStatement.setString(2, username);
-	      preparedStatement.setString(3, password);
-	      
-	      
-
-	  } catch (Exception e) {
-	      e.printStackTrace(); // Handle exceptions appropriately in production code
-	  }
      }
      
      public static void addAdmin(String username, String password){
@@ -167,6 +159,32 @@ public class Controller {
 	  } catch (Exception e) {
 	      e.printStackTrace(); // Handle exceptions appropriately in production code
 	  }
+     }
+     
+     
+     public boolean isAdmin(String username, String password){
+	  String sql = "SELECT * FROM Users WHERE BINARY username = ? AND password = ?";
+	  boolean isAdmin = false;
+
+	  try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+	       PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+	     // Set the parameters
+	     preparedStatement.setString(1, username);
+	     preparedStatement.setString(2, password);
+
+
+	     // Execute the query
+	     ResultSet resultSet = preparedStatement.executeQuery();
+	     
+	     if (resultSet.next()){
+		  isAdmin = "Admin".equals(resultSet.getString("Type"));
+	     }
+	 } catch (Exception e) {
+	     e.printStackTrace(); // Handle exceptions appropriately in production code
+	  }
+	  
+	  return isAdmin;
      }
      
      public static void main(String[] args) {
