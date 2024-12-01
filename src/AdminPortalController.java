@@ -1,8 +1,3 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.Random;
 import java.awt.event.*; // Importing AWT event classes
 import java.awt.*; 
 import javax.swing.*;
@@ -26,6 +21,8 @@ public class AdminPortalController {
 	  
 	  this.adminPortal.getUserAccountButton().addActionListener(new UserAccountBtnListener());
 	  this.adminPortal.getAdminAccountButton().addActionListener(new AdminAccountBtnListener());
+	  this.adminPortal.getFacAndOthersButton().addActionListener(new FacAndOtherBtnListener());
+	  this.adminPortal.getReportButton().addActionListener(new ReportBtnListener());
      }
      
      class UserAccountBtnListener implements ActionListener{
@@ -37,6 +34,18 @@ public class AdminPortalController {
      class AdminAccountBtnListener implements ActionListener {
 	  public void actionPerformed(ActionEvent e){
 	       cardLayout.show(mainPanel, "AdminAccount");
+	  }
+     }
+     
+     class FacAndOtherBtnListener implements ActionListener{
+	  public void actionPerformed(ActionEvent e) {
+	      cardLayout.show(mainPanel, "FacilitiesAndOthers");
+	  }
+     }
+     
+     class ReportBtnListener implements ActionListener{
+	  public void actionPerformed(ActionEvent e) {
+	      cardLayout.show(mainPanel, "Report");
 	  }
      }
 }

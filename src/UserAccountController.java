@@ -2,8 +2,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Random;
-import java.awt.event.*; // Importing AWT event classes
+import java.awt.event.*;
 import java.awt.*; 
 import java.sql.Date;
 import java.sql.SQLException;

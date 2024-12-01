@@ -118,6 +118,14 @@ public class AdminPortal extends JPanel {
     public JButton getAdminAccountButton(){
 	 return adminAccountButton;
     }
+    
+    public JButton getFacAndOthersButton(){
+	 return facilitiesButton;
+    }
+    
+    public JButton getReportButton(){
+	 return reportButton;
+    }
 
     public static void main(String[] args) {
         // Create frame

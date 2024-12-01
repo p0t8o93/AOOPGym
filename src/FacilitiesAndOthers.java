@@ -2,7 +2,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public class AdminAccount extends JPanel {
+public class FacilitiesAndOthers extends JPanel {
     private JTable userTable;
     private DefaultTableModel tableModel;
     private JButton updateButton;
@@ -16,7 +16,7 @@ public class AdminAccount extends JPanel {
     private static final String USER = "root";
     private static final String PASSWORD = "root";
 
-    public AdminAccount() {
+    public FacilitiesAndOthers() {
         setLayout(new BorderLayout());
         initializeComponents();
         //sloadUserData();
@@ -43,6 +43,10 @@ public class AdminAccount extends JPanel {
         buttonPanel.add(disableButton);
         buttonPanel.add(enableButton);
         add(buttonPanel, BorderLayout.SOUTH);
+
+        
+
+        
     }
 
     
@@ -66,22 +70,22 @@ public class AdminAccount extends JPanel {
 	 return backButton;
     }
     
-    public JButton getAddButton(){
-	 return addButton;
-    }
-    
     public JTable getJTable(){
 	 return userTable;
     }
     
+    public JButton getAddButton(){
+	 return addButton;
+    }
+    
     public static void main(String[] args) {
         // Create the main frame
-        JFrame frame = new JFrame("Admin");
+        JFrame frame = new JFrame("User  Management System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600); // Set the size of the window
 
         // Create an instance of the UserManagementPanel
-        AdminAccount userManagementPanel = new AdminAccount();
+        UserAccount userManagementPanel = new UserAccount();
         
         // Add the panel to the frame
         frame.add(userManagementPanel);

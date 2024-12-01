@@ -11,7 +11,7 @@ public class MainJFrame extends JFrame {
         // Set up the main frame
         setTitle("Gym Membership Application");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 550);
+        setSize(400, 300);
         setLocationRelativeTo(null); // Center the frame
 
         cardLayout = new CardLayout();
@@ -24,6 +24,8 @@ public class MainJFrame extends JFrame {
 	AdminPortal adminPanel = new AdminPortal();
 	UserAccount useraccPanel = new UserAccount();
 	AdminAccount adminaccPanel = new AdminAccount();
+	FacilitiesAndOthers facAndOthers = new FacilitiesAndOthers();
+	Report report = new Report();
 
         // Create the controller
         LoginController loginCtrl = new LoginController(loginPanel, registerPanel, mainPanel, this);
@@ -31,6 +33,8 @@ public class MainJFrame extends JFrame {
 	AdminPortalController adminCtrl = new AdminPortalController(adminPanel, mainPanel, this);
 	UserAccountController useraccCtrl = new UserAccountController(useraccPanel, mainPanel, this);
 	AdminAccountController adminaccCtrl = new AdminAccountController(adminaccPanel, mainPanel, this);
+	FacilitiesAndOthersController facAndOthersCtrl = new FacilitiesAndOthersController(facAndOthers, mainPanel, this);
+	ReportController reportCtrl = new ReportController(report, mainPanel, this);
 
 	
         // Add panels to the main panel
@@ -40,6 +44,8 @@ public class MainJFrame extends JFrame {
 	mainPanel.add(adminPanel, "AdminPortal");
 	mainPanel.add(useraccPanel, "UserAccount");
 	mainPanel.add(adminaccPanel, "AdminAccount");
+	mainPanel.add(facAndOthers, "FacilitiesAndOthers");
+	mainPanel.add(report, "Report");
 
         add(mainPanel, BorderLayout.CENTER);
 
