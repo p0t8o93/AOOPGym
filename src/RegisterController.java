@@ -70,6 +70,7 @@ public class RegisterController {
 	       
 	       registerUser(username, password, name, phoneNo, age, birthdate, gender, height, weight, bmi);
 	       JOptionPane.showMessageDialog(null, "Succesfully Registered", "Message", JOptionPane.INFORMATION_MESSAGE);
+               frame.setSize(400, 300);
 	       cardLayout.show(mainPanel, "Login");
 	  }
      }

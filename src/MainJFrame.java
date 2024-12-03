@@ -35,6 +35,7 @@ public class MainJFrame extends JFrame {
 	AdminAccountController adminaccCtrl = new AdminAccountController(adminaccPanel, mainPanel, this);
 	FacilitiesAndOthersController facAndOthersCtrl = new FacilitiesAndOthersController(facAndOthers, mainPanel, this);
 	ReportController reportCtrl = new ReportController(report, mainPanel, this);
+        
 
 	
         // Add panels to the main panel
